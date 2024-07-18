@@ -6,11 +6,62 @@
    gsap.registerPlugin(ScrollTrigger);
 
    let textContainer: HTMLParagraphElement;
-   let image: HTMLDivElement;
-   let image2: HTMLDivElement;
-   let image3: HTMLDivElement;
-   let image4: HTMLDivElement;
-   let imageMain: HTMLDivElement;
+   let image: HTMLImageElement;
+   let image2: HTMLImageElement;
+   let image3: HTMLImageElement;
+   let image4: HTMLImageElement;
+   let imageMain: HTMLImageElement;
+
+   const animateImage = (img: HTMLImageElement, x: number, y: number, isLast: boolean) => {
+      gsap.to(img, {
+         scrollTrigger: {
+            trigger: img,
+            start: "+=75",
+            end: "+=4250",
+            scrub: 1,
+         },
+         x,
+         y,
+         onComplete: () => {
+            if (isLast) {
+               gsap.to(imageMain, {
+                  rotate: 30,
+                  duration: 2,
+                  y: -50,
+                  x: -300,
+                  ease: "bounce.inOut",
+               });
+
+               [image, image2, image3, image4].forEach((img) => {
+                  gsap.to(img, {
+                     opacity: 0,
+                     duration: 0,
+                  });
+               });
+            }
+         },
+         onReverseComplete: () => {
+            if (isLast) {
+               gsap.to(imageMain, {
+                  rotate: 0,
+                  duration: 2,
+                  y: 0,
+                  x: 0,
+                  ease: "bounce.inOut",
+               });
+
+               [image, image2, image3, image4].forEach((img) => {
+                  gsap.to(img, {
+                     opacity: 1,
+                     duration: 3,
+                     ease: "back.in",
+                  });
+               });
+            }
+         },
+      });
+   };
+
    onMount(() => {
       const textElement = textContainer.querySelector("p");
 
@@ -28,72 +79,10 @@
          });
       }
 
-      gsap.to(image, {
-         scrollTrigger: {
-            trigger: image,
-            start: "+=75",
-            end: "+=4250",
-            scrub: 1,
-            markers: true,
-         },
-         x: 450,
-         y: -5,
-         onComplete: () => {
-            gsap.set(image, { opacity: 0 }); // This will hide the image by setting its opacity to 0
-         },
-      });
-
-      gsap.to(image2, {
-         scrollTrigger: {
-            trigger: image2,
-            start: "+=75",
-            end: "+=4250",
-            scrub: 1,
-            markers: true,
-         },
-         x: 250,
-         y: 85,
-         onComplete: () => {
-            gsap.set(image2, { opacity: 0 }); // This will hide the image by setting its opacity to 0
-         },
-      });
-
-      gsap.to(image3, {
-         scrollTrigger: {
-            trigger: image3,
-            start: "+=75",
-            end: "+=4250",
-            scrub: 1,
-            markers: true,
-         },
-         x: -225,
-         y: -45,
-         onComplete: () => {
-            gsap.set(image3, { opacity: 0 }); // This will hide the image by setting its opacity to 0
-         },
-      });
-
-      gsap.to(image4, {
-         scrollTrigger: {
-            trigger: image4,
-            start: "+=75",
-            end: "+=4250",
-            scrub: 1,
-            markers: true,
-         },
-         x: -250,
-         y: 225,
-         onComplete: () => {
-            gsap.to(imageMain, {
-               rotate: 30,
-               duration: 2.5,
-               y: -50,
-               x: -300,
-               ease: "bounce.inOut",
-            });
-            gsap.set(image4, { opacity: 0 }); // This will hide the image by setting its opacity to 0
-         },
-      });
+      animateImage(image, 450, -5, false);
+      animateImage(image2, 250, 85, false);
+      animateImage(image3, -225, -45, false);
+      animateImage(image4, -250, 225, true);
 
       gsap.to("progress", {
          value: 100,
@@ -111,8 +100,8 @@
       <p class="text-slate-100 text-8xl text inline-block font-bold tracking-tighter">
          Explore Art Around the world, Beautiful Artifacts, Memory to Remember Learn, Know and See History..
       </p>
-      <div class="absolute bottom-10 right-[55%] -z-10" bind:this={image}>
-         <img src="/image1.png" alt="art-img" class="w-[300px] rounded-sm" />
+      <div class="absolute bottom-10 right-[55%] -z-10">
+         <img src="/image1.png" alt="art-img" class="w-[300px] rounded-sm" bind:this={image} />
       </div>
       <div class="absolute bottom-36 right-[42.5%] -z-20">
          <img src="/image4.png" alt="art-img" class="w-[300px] h-[400px] rounded-md" bind:this={image2} />
