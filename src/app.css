@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&display=swap');
 
 body{
-    font-family: 'Edu AU VIC WA NT Hand', cursive;
+    font-family: 'Edu AU VIC WA NT Hand', cursive !important;
 }
 
 progress::-webkit-progress-bar {
