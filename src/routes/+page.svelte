@@ -76,6 +76,7 @@
                end: () => `+=${textElement.scrollWidth}`,
                scrub: 1,
                pin: true,
+               anticipatePin: 1,
             },
          });
       }

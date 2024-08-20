@@ -16,6 +16,6 @@ progress::-webkit-progress-value {
   background-attachment: fixed;
 }
 progress::-moz-progress-bar {
-  background: linear-gradient(to left, #3BA010, #68e12c,#286113 );
+  background: linear-gradient(to left, #96EF67, #245215);
   background-attachment: fixed;
 }
